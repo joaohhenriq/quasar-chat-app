@@ -1,12 +1,23 @@
+import Vue from 'vue'
 import { firebaseAuth, firebaseDb } from 'boot/firebase'
 
 const state = {
-    userDetails: {}
+    userDetails: {},
+    users: {}
 }
 
 const mutations = {
     setUserDetails(state, payload) {
         state.userDetails = payload
+    },
+    addUser(state, payload) {
+        // 1 - state property to change
+        // 2 - key 
+        // 3 - data
+        Vue.set(state.users, payload.userId, payload.userDetails)
+    },
+    updateUser(state, payload) {
+        Object.assign(state.users[payload.userId], payload.userDetails)
     }
 }
 
@@ -57,6 +68,7 @@ const actions = {
                         online: true
                     }
                 })
+                dispatch('firebaseGetUsers')
                 this.$router.push('/')
             } else {
                 //user logged out
@@ -74,11 +86,40 @@ const actions = {
     },
     firebaseUpdateUser({ }, payload) {
         firebaseDb.ref('users/' + payload.userId).update(payload.updates)
+    },
+    firebaseGetUsers({ commit }) {
+        firebaseDb.ref('users').on('child_added', snapshot => {
+            let userDetails = snapshot.val()
+            let userId = snapshot.key
+
+            commit('addUser', {
+                userId,
+                userDetails
+            })
+        })
+
+        firebaseDb.ref('users').on('child_changed', snapshot => {
+            let userDetails = snapshot.val()
+            let userId = snapshot.key
+
+            commit('updateUser', {
+                userId,
+                userDetails
+            })
+        })
     }
 }
 
 const getters = {
-
+    users: state => {
+        let usersFiltered = {}
+        Object.keys(state.users).forEach(key => {
+            if (key !== state.userDetails.userId) {
+                usersFiltered[key] = state.users[key]
+            }
+        })
+        return usersFiltered
+    }
 }
 
 export default {
