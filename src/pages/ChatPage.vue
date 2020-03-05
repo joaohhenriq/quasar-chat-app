@@ -33,27 +33,18 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
 export default {
   data() {
     return {
       newMessage: '',
-      messages: [
-        {
-          text: 'Hey, how are you?',
-          from: 'me',
-        },
-        {
-          text: 'Fine, and you?',
-          from: 'them',
-        },
-        {
-          text: 'Goog goog',
-          from: 'me',
-        },
-      ]
     }
   },
+  computed: {
+    ...mapState('store', ['messages'])
+  },
   methods: {
+    ...mapActions('store', ['firebaseGetMessages', 'firebaseStopGettingMessages']),
     sendMessage() {
       console.log(this.newMessage);
 
@@ -62,6 +53,15 @@ export default {
         from: 'me'
       })
     }
+  },
+  mounted() {
+    let otherUserId = this.$route.params.otherUserId
+
+    this.firebaseGetMessages(otherUserId)
+
+  },
+  destroyed() {
+    this.firebaseStopGettingMessages()
   }
 }
 </script>

@@ -1,0 +1,45 @@
+{
+  "chats": {
+    "VO1g5j3wPMcf29Y1f3gqczIv4es1": {
+      "WKCZ35xiM0U7sFkatiqPC5GRYQC2": {
+        "MESSAGEID1": {
+          "from": "them",
+          "text": "Helloooo John"
+        },
+        "MESSAGEID2": {
+          "from": "me",
+          "text": "Hello Jim haha"
+        }
+      }
+    },
+    "WKCZ35xiM0U7sFkatiqPC5GRYQC2": {
+      "VO1g5j3wPMcf29Y1f3gqczIv4es1": {
+        "MESSAGEID1": {
+          "from": "me",
+          "text": "Helloooo John"
+        },
+        "MESSAGEID2": {
+          "from": "them",
+          "text": "Hello Jim haha"
+        }
+      }
+    }
+  },
+  "users": {
+    "VO1g5j3wPMcf29Y1f3gqczIv4es1": {
+      "email": "a@a.com",
+      "name": "aaaa",
+      "online": true
+    },
+    "WKCZ35xiM0U7sFkatiqPC5GRYQC2": {
+      "email": "nels@a.com",
+      "name": "Nels",
+      "online": false
+    },
+    "oiB5z4AKyHQzPcN0kYEDtqc5CW82": {
+      "email": "halle@a.com",
+      "name": "Halle",
+      "online": false
+    }
+  }
+}
