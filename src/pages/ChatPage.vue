@@ -50,11 +50,14 @@ export default {
     ...mapState('store', ['messages', 'userDetails']),
   },
   methods: {
-    ...mapActions('store', ['firebaseGetMessages', 'firebaseStopGettingMessages']),
+    ...mapActions('store', ['firebaseGetMessages', 'firebaseStopGettingMessages', 'firebaseSendMessage']),
     sendMessage() {
-      this.messages.push({
-        text: this.newMessage,
-        from: 'me'
+      this.firebaseSendMessage({
+        message: {
+          text: this.newMessage,
+          from: 'me'
+        },
+        otherUserId: this.$route.params.otherUserId
       })
     }
   },
